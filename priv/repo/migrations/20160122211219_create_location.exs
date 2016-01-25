@@ -6,6 +6,8 @@ defmodule SpeakEasyApi.Repo.Migrations.CreateLocation do
       add :name, :string
       add :description, :text
       add :cover_image_url, :string
+      add :latitude, :float
+      add :longitude, :float
 
       timestamps
     end

@@ -14,6 +14,8 @@ defmodule SpeakEasyApi.LocationView do
       name: location.name,
       description: location.description,
       cover_image_url: location.cover_image_url,
+      latitude: location.latitude,
+      longitude: location.longitude,
       tags: []}
   end
 end

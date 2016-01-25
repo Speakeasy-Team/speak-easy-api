@@ -5,6 +5,8 @@ defmodule SpeakEasyApi.Location do
     field :name, :string
     field :description, :string
     field :cover_image_url, :string
+    field :latitude, :float
+    field :longitude, :float
 
     timestamps
   end
