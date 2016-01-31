@@ -12,8 +12,6 @@ config :logger, level: :warn
 # Configure your database
 config :speak_easy_api, SpeakEasyApi.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
   database: "speak_easy_api_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox

@@ -7,6 +7,7 @@ defmodule SpeakEasyApi.Router do
 
   scope "/", SpeakEasyApi do
     pipe_through :api # Use api stack
+
     resources "/locations", LocationController, except: [:new, :edit]
   end
 

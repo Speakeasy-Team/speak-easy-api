@@ -20,6 +20,9 @@ defmodule SpeakEasyApi.LocationControllerTest do
     assert json_response(conn, 200)["data"] == %{"id" => location.id,
       "name" => location.name,
       "description" => location.description,
+      "latitude" => location.latitude,
+      "longitude" => location.longitude,
+      "tags" => [],
       "cover_image_url" => location.cover_image_url}
   end
 
@@ -40,23 +43,34 @@ defmodule SpeakEasyApi.LocationControllerTest do
     assert json_response(conn, 422)["errors"] != %{}
   end
 
-  test "updates and renders chosen resource when data is valid", %{conn: conn} do
-    location = Repo.insert! %Location{}
-    conn = put conn, location_path(conn, :update, location), location: @valid_attrs
-    assert json_response(conn, 200)["data"]["id"]
-    assert Repo.get_by(Location, @valid_attrs)
+  test "#map_errors(errors) turns a list of key value pairs to a map" do
+    list = [name: "can't be blank", description: "can't be blank",
+       cover_image_url: "can't be blank"]
+    expectation = %{name: "can't be blank",
+      description: "can't be blank",
+      cover_image_url: "can't be blank"}
+    response = SpeakEasyApi.LocationView.map_errors(list)
+
+    assert expectation == response
   end
 
-  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
-    location = Repo.insert! %Location{}
-    conn = put conn, location_path(conn, :update, location), location: @invalid_attrs
-    assert json_response(conn, 422)["errors"] != %{}
-  end
-
-  test "deletes chosen resource", %{conn: conn} do
-    location = Repo.insert! %Location{}
-    conn = delete conn, location_path(conn, :delete, location)
-    assert response(conn, 204)
-    refute Repo.get(Location, location.id)
-  end
+  # test "updates and renders chosen resource when data is valid", %{conn: conn} do
+  #   location = Repo.insert! %Location{}
+  #   conn = put conn, location_path(conn, :update, location), location: @valid_attrs
+  #   assert json_response(conn, 200)["data"]["id"]
+  #   assert Repo.get_by(Location, @valid_attrs)
+  # end
+  #
+  # test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
+  #   location = Repo.insert! %Location{}
+  #   conn = put conn, location_path(conn, :update, location), location: @invalid_attrs
+  #   assert json_response(conn, 422)["errors"] != %{}
+  # end
+  #
+  # test "deletes chosen resource", %{conn: conn} do
+  #   location = Repo.insert! %Location{}
+  #   conn = delete conn, location_path(conn, :delete, location)
+  #   assert response(conn, 204)
+  #   refute Repo.get(Location, location.id)
+  # end
 end

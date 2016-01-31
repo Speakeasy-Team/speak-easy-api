@@ -18,4 +18,12 @@ defmodule SpeakEasyApi.LocationView do
       longitude: location.longitude,
       tags: []}
   end
+
+  def render("errors.json", %{errors: errors}) do
+    %{errors: map_errors(errors)}
+  end
+
+  def map_errors(errors) do
+    Enum.into(errors, %{})
+  end
 end
