@@ -29,4 +29,18 @@ defmodule SpeakEasyApi.LocationController do
         |> render("errors.json", errors: changeset.errors)
     end
   end
+
+  def update(conn, %{"id" => id, "location" => location_params}) do
+    location = Repo.get!(Location, id)
+    changeset = Location.changeset(location, location_params)
+
+    case Repo.update(changeset) do
+      {:ok, location} ->
+        render(conn, "show.json", location: location)
+      {:error, location} ->
+        conn
+        |> put_status(422)
+        |> render("errors.json", errors: changeset.errors)
+    end
+  end
 end
