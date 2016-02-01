@@ -2,9 +2,13 @@ defmodule SpeakEasyApi.LocationControllerTest do
   use SpeakEasyApi.ConnCase
 
   alias SpeakEasyApi.Location
-  @valid_attrs %{cover_image_url: "some content", 
-                 description: "some content", 
-                 name: "some content"}
+  @valid_attrs %{
+    cover_image_url: "some content", 
+    description: "some content", 
+    name: "some content",
+    latitude: 12.3,
+    longitude: 12.3,
+  }
   @invalid_attrs %{}
 
   setup %{conn: conn} do

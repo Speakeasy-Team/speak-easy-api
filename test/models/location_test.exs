@@ -3,7 +3,13 @@ defmodule SpeakEasyApi.LocationTest do
 
   alias SpeakEasyApi.Location
 
-  @valid_attrs %{cover_image_url: "some content", description: "some content", name: "some content"}
+  @valid_attrs %{
+    cover_image_url: "some content",
+    description: "some content",
+    name: "some content",
+    latitude: 12.345,
+    longitude: 12.345,
+  }
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

@@ -11,7 +11,7 @@ defmodule SpeakEasyApi.Location do
     timestamps
   end
 
-  @required_fields ~w(name description cover_image_url)
+  @required_fields ~w(name description cover_image_url latitude longitude)
   @optional_fields ~w()
 
   @doc """
