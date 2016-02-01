@@ -26,7 +26,7 @@ defmodule SpeakEasyApi.LocationController do
       {:error, changeset} ->
         conn
         |> put_status(422)
-        |> render("errors.json", errors: changeset.errors)
+        |> render(SpeakEasyApi.ErrorView, "errors.json", errors: changeset.errors)
     end
   end
 
@@ -40,7 +40,7 @@ defmodule SpeakEasyApi.LocationController do
       {:error, location} ->
         conn
         |> put_status(422)
-        |> render("errors.json", errors: changeset.errors)
+        |> render(SpeakEasyApi.ErrorView, "errors.json", errors: changeset.errors)
     end
   end
 

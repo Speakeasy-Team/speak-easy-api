@@ -16,6 +16,6 @@ defmodule SpeakEasyApi.ErrorViewTest do
 
   test "render any other" do
     assert render_to_string(SpeakEasyApi.ErrorView, "505.html", []) ==
-           "Server internal error"
+          "Server internal error"
   end
 end

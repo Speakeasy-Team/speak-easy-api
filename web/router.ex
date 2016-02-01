@@ -9,6 +9,8 @@ defmodule SpeakEasyApi.Router do
     pipe_through :api # Use api stack
 
     resources "/locations", LocationController, except: [:new, :edit]
+    resources "/users", UserController, only: [:index, :create]
+    resources "/sessions", SessionController, only: [:create]
   end
 
   # Other scopes may use custom stacks.
