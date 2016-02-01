@@ -43,4 +43,10 @@ defmodule SpeakEasyApi.LocationController do
         |> render("errors.json", errors: changeset.errors)
     end
   end
+
+  def delete(conn, %{"id" => id}) do
+    location = Repo.get!(Location, id)
+    Repo.delete!(location)
+    send_resp(conn, 204, "ok")
+  end
 end

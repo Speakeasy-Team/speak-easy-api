@@ -70,10 +70,10 @@ defmodule SpeakEasyApi.LocationControllerTest do
     assert json_response(conn, 422)["errors"] != %{}
   end
   
-  # test "deletes chosen resource", %{conn: conn} do
-  #   location = Repo.insert! %Location{}
-  #   conn = delete conn, location_path(conn, :delete, location)
-  #   assert response(conn, 204)
-  #   refute Repo.get(Location, location.id)
-  # end
+  test "deletes chosen resource", %{conn: conn} do
+    location = Repo.insert! %Location{}
+    conn = delete conn, location_path(conn, :delete, location)
+    assert response(conn, 204)
+    refute Repo.get(Location, location.id)
+  end
 end
