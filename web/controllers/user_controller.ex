@@ -8,7 +8,7 @@ defmodule SpeakEasyApi.UserController do
   end
 
   def create(conn, %{"user" => params}) do
-    changeset = User.changeset(%User{}, params)
+    changeset = User.create_user_changeset(%User{}, params)
 
     case Repo.insert(changeset) do
       {:ok, user} ->
