@@ -1,6 +1,8 @@
 defmodule SpeakEasyApi.Plugs.CurrentUser do
   import Plug.Conn
   alias SpeakEasyApi.User
+  alias SpeakEasyApi.Guest
+  alias SpeakEasyApi.JWTConverter
 
   @key Application.get_env(:vars, :json_web_token_key)
 
@@ -17,7 +19,7 @@ defmodule SpeakEasyApi.Plugs.CurrentUser do
     conn.req_headers |> Enum.into(%{}) |> Map.get("authorization")
   end
 
-  defp fetch_current_user(token, _) when is_nil(token), do: %SpeakEasyApi.Guest{}
+  defp fetch_current_user(token, _) when is_nil(token), do: %Guest{}
   defp fetch_current_user(token, repo) when is_binary(token) do
     token
     |> String.replace("bearer ", "")
@@ -26,7 +28,7 @@ defmodule SpeakEasyApi.Plugs.CurrentUser do
   end
 
   defp get_user_id(token) do
-    case SpeakEasyApi.JWTConverter.from_token(token) do
+    case JWTConverter.from_token(token) do
       {:ok, claims} -> claims.user_id
       {:error, _} -> nil
     end

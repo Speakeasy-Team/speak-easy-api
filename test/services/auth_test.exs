@@ -1,7 +1,7 @@
 defmodule SpeakEasyApi.AuthTest do
   use SpeakEasyApi.ConnCase
   alias SpeakEasyApi.User
-  alias SpeakEasyApi.Auth
+  alias SpeakEasyApi.Auth, as: Subject
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
@@ -14,7 +14,7 @@ defmodule SpeakEasyApi.AuthTest do
     changeset = User.changeset(%User{}, %{email: email, password: password})
     Repo.insert!(changeset)
 
-    response = Auth.authorize(conn, email, password)
+    response = Subject.authorize(conn, email, password)
     assert response.resp_body
   end
 
@@ -25,7 +25,7 @@ defmodule SpeakEasyApi.AuthTest do
     changeset = User.changeset(%User{}, %{email: email, password: password})
     Repo.insert!(changeset)
 
-    response = Auth.authorize(conn, email, "hello")
+    response = Subject.authorize(conn, email, "hello")
     assert response.status == 401
   end
 
@@ -37,7 +37,7 @@ defmodule SpeakEasyApi.AuthTest do
     changeset = User.changeset(%User{}, %{email: email, password: password})
     user = Repo.insert!(changeset)
 
-    assert Auth.valid_password?(user, password)
+    assert Subject.valid_password?(user, password)
   end
 
   test "#authorize_user(username, password) returns false if the email and
@@ -48,6 +48,6 @@ defmodule SpeakEasyApi.AuthTest do
     changeset = User.changeset(%User{}, %{email: email, password: password})
     user = Repo.insert!(changeset)
 
-    refute Auth.valid_password?(user, "hi")
+    refute Subject.valid_password?(user, "hi")
   end
 end

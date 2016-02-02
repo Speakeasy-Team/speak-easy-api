@@ -3,6 +3,7 @@ defmodule SpeakEasyApi.CurrentUserTest do
   use Plug.Test
   alias SpeakEasyApi.User
   alias SpeakEasyApi.Repo
+  alias SpeakEasyApi.Plugs.CurrentUser, as: Subject
 
   test "plug sets current user onto the conn" do
     user = Repo.insert! %User{email: "hello", password_hash: "hello"}
@@ -11,16 +12,16 @@ defmodule SpeakEasyApi.CurrentUserTest do
       conn(:get, "/locations")
       |> put_req_header("authorization", "bearer #{token}")
 
-    opts = SpeakEasyApi.Plugs.CurrentUser.init(repo: Repo)
-    result = SpeakEasyApi.Plugs.CurrentUser.call(conn, opts)
+    opts = Subject.init(repo: Repo)
+    result = Subject.call(conn, opts)
 
     assert result.assigns.current_user == user
   end
 
   test "plug assigns a guest user when a token is not provided" do
     conn = conn(:get, "/locations")
-    opts = SpeakEasyApi.Plugs.CurrentUser.init(repo: Repo)
-    result = SpeakEasyApi.Plugs.CurrentUser.call(conn, opts)
+    opts = Subject.init(repo: Repo)
+    result = Subject.call(conn, opts)
 
     assert result.assigns.current_user == %SpeakEasyApi.Guest{}
   end
@@ -29,8 +30,8 @@ defmodule SpeakEasyApi.CurrentUserTest do
     conn =
       conn(:get, "/locations")
       |> put_req_header("authorization", "bearer YXNkZmFzZGZhc2Rm")
-    opts = SpeakEasyApi.Plugs.CurrentUser.init(repo: Repo)
-    result = SpeakEasyApi.Plugs.CurrentUser.call(conn, opts)
+    opts = Subject.init(repo: Repo)
+    result = Subject.call(conn, opts)
 
     assert result.assigns.current_user == nil
   end
