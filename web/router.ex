@@ -12,9 +12,4 @@ defmodule SpeakEasyApi.Router do
     resources "/users", UserController, only: [:index, :create]
     resources "/sessions", SessionController, only: [:create]
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", SpeakEasyApi do
-  #   pipe_through :api
-  # end
 end
