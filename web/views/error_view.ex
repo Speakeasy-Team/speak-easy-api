@@ -1,6 +1,10 @@
 defmodule SpeakEasyApi.ErrorView do
   use SpeakEasyApi.Web, :view
 
+  def render("errors.json", assigns) do
+    %{errors: map_errors(assigns.errors)}
+  end
+
   def render("404.html", _assigns) do
     "Page not found"
   end
@@ -13,5 +17,9 @@ defmodule SpeakEasyApi.ErrorView do
   # template is found, let's render it as 500
   def template_not_found(_template, assigns) do
     render "500.html", assigns
+  end
+
+  defp map_errors(errors) do
+    Enum.into(errors, %{})
   end
 end
