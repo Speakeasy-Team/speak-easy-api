@@ -1,4 +1,4 @@
-defmodule SpeakEasyApi.CurrentUserTest do
+defmodule SpeakEasyApi.Plugs.CurrentUserTest do
   use ExUnit.Case, async: true
   use Plug.Test
   alias SpeakEasyApi.User

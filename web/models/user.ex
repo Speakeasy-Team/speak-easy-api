@@ -27,6 +27,8 @@ defmodule SpeakEasyApi.User do
     |> validate_inclusion(:permission, @permission_options)
   end
 
+  def guest?(user), do: user.permission == "guest"
+
   defp put_password_hash(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
