@@ -3,6 +3,7 @@ defmodule SpeakEasyApi.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug SpeakEasyApi.Plugs.CurrentUser, repo: Repo
   end
 
   scope "/", SpeakEasyApi do

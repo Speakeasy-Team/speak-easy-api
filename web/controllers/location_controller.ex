@@ -2,8 +2,11 @@ defmodule SpeakEasyApi.LocationController do
   use SpeakEasyApi.Web, :controller
 
   alias SpeakEasyApi.Location
+  alias SpeakEasyApi.LocationAuthorization
+  alias SpeakEasyApi.Plugs.Authorize
 
   plug :scrub_params, "location" when action in [:create, :update]
+  plug Authorize, permissions_handler: LocationAuthorization
 
   def index(conn, _params) do
     locations = Repo.all(Location)

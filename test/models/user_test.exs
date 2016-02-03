@@ -38,4 +38,14 @@ defmodule SpeakEasyApi.UserTest do
                 :permission, "user"))
     assert changeset.valid?
   end
+
+  test "guest? returns true if the current_user is a guest" do
+    user = %Subject{permission: "guest"}
+    assert Subject.guest?(user)
+  end
+
+  test "guest? returns false if the current_user is a guest" do
+    user = %Subject{permission: "admin"}
+    refute Subject.guest?(user)
+  end
 end
