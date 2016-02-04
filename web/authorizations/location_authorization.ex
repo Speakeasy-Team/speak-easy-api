@@ -1,23 +1,10 @@
 defmodule SpeakEasyApi.LocationAuthorization do
-  alias SpeakEasyApi.User
+  use SpeakEasyApi.Authorization
 
-  def index(current_user) do
-    User.guest? current_user
-  end
+  def authorize(action, %Guest{})
+    when action in @crud_actions, do: true
+  def authorize(action, %User{})
+    when action in @crud_actions, do: true
 
-  def show(current_user) do
-    User.guest? current_user
-  end
-
-  def create(current_user) do
-    User.guest? current_user
-  end
-
-  def update(current_user) do
-    User.guest? current_user
-  end
-
-  def delete(current_user) do
-    User.guest? current_user
-  end
+  def authorize(_action, _user), do: false
 end

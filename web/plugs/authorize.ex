@@ -10,12 +10,10 @@ defmodule SpeakEasyApi.Plugs.Authorize do
     current_user = conn.assigns.current_user
     action = conn.private.phoenix_action
 
-    if apply(permissions_hander, action, [current_user]) do
+    if apply(permissions_hander, :authorize, [action, current_user]) do
       conn
     else
-      conn
-      |> put_status(401)
-      |> halt
+      conn |> put_status(401) |> halt
     end
   end
 end

@@ -6,7 +6,7 @@ defmodule SpeakEasyApi.Plugs.AuthorizeTest do
   alias SpeakEasyApi.LocationAuthorization
 
   test "plug passes through the conn if the user is authorized" do
-    with_mock LocationAuthorization, [index: fn(_) -> true end] do
+    with_mock LocationAuthorization, [authorize: fn(_, _) -> true end] do
       conn = get conn(), "/locations"
 
       opts = Subject.init(permissions_handler: LocationAuthorization)
@@ -17,7 +17,7 @@ defmodule SpeakEasyApi.Plugs.AuthorizeTest do
   end
 
   test "plug renders unauthorized if the user is unauthorized" do
-    with_mock LocationAuthorization, [index: fn(_) -> false end] do
+    with_mock LocationAuthorization, [authorize: fn(_, _) -> false end] do
       conn = get conn(), "/locations"
 
       opts = Subject.init(permissions_handler: LocationAuthorization)
