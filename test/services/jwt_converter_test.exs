@@ -4,7 +4,7 @@ defmodule SpeakEasyApi.JwtConverterTest do
   alias SpeakEasyApi.JWTConverter, as: Subject
 
   @opts %{
-    key: Application.get_env(:vars, :json_web_token_key)
+    key: Application.get_env(:speak_easy_api, :json_web_token_key)
   }
 
   test "to_token(claims) converts the claim to a token" do

@@ -24,6 +24,6 @@ config :phoenix, :generators,
   migration: true,
   binary_id: false
 
-config :vars, json_web_token_key: "gZH75aKtMN3Yj0iPS4hcgUuTwjAzZr9C"
+config :speak_easy_api, json_web_token_key: "gZH75aKtMN3Yj0iPS4hcgUuTwjAzZr9C"
 
 import_config "#{Mix.env}.exs"
