@@ -1,4 +1,6 @@
 %{"backoff": {:hex, :backoff, "1.1.1"},
+  "canada": {:hex, :canada, "1.0.0"},
+  "canary": {:hex, :canary, "0.13.0"},
   "comeonin": {:hex, :comeonin, "2.1.0"},
   "connection": {:hex, :connection, "1.0.2"},
   "cowboy": {:hex, :cowboy, "1.0.4"},

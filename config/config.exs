@@ -24,6 +24,12 @@ config :phoenix, :generators,
   migration: true,
   binary_id: false
 
-config :speak_easy_api, json_web_token_key: "gZH75aKtMN3Yj0iPS4hcgUuTwjAzZr9C"
+config :speak_easy_api,
+  json_web_token_key: "gZH75aKtMN3Yj0iPS4hcgUuTwjAzZr9C"
+
+config :canary,
+  repo: SpeakEasyApi.Repo,
+  not_found_handler: {SpeakEasyApi.CanaryHelper, :handle_not_found},
+  unauthorized_handler: {SpeakEasyApi.CanaryHelper, :handle_unauthorized}
 
 import_config "#{Mix.env}.exs"

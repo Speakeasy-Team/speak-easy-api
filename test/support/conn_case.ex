@@ -26,6 +26,7 @@ defmodule SpeakEasyApi.ConnCase do
       import Ecto.Query, only: [from: 1, from: 2]
 
       import SpeakEasyApi.Router.Helpers
+      import SpeakEasyApi.AuthHelper
 
       # The default endpoint for testing
       @endpoint SpeakEasyApi.Endpoint
