@@ -21,6 +21,14 @@ defmodule SpeakEasyApi.LocationControllerTest do
     assert json_response(conn, 200)["data"] == []
   end
 
+  test "lists all the distances from a location", %{conn: conn} do
+    location = Repo.insert! %Location{latitude: 1.0000, longitude: 0.0000}
+    conn = get conn, location_path(conn, :index), %{lat: "0.0000", long:
+      "0.0000"}
+    [location|_] = json_response(conn, 200)["data"]
+    assert location["distance"] != %{}
+  end
+
   test "shows chosen resource", %{conn: conn} do
     location = Repo.insert! %Location{}
     conn = get conn, location_path(conn, :show, location)
