@@ -4,15 +4,19 @@ defmodule SpeakEasyApi.Plugs.CurrentUser do
   alias SpeakEasyApi.Guest
   alias SpeakEasyApi.JWTConverter
 
-  @key Application.get_env(:vars, :json_web_token_key)
+  @key Application.get_env(:speak_easy_api, :json_web_token_key)
 
   def init(opts) do
     Keyword.fetch!(opts, :repo)
   end
 
   def call(conn, repo) do
-    token = conn |> extract_auth_header
-    assign(conn, :current_user, fetch_current_user(token, repo))
+    if Map.get(conn.assigns, :current_user) do
+      conn
+    else
+      token = conn |> extract_auth_header
+      assign(conn, :current_user, fetch_current_user(token, repo))
+    end
   end
 
   defp extract_auth_header(conn) do

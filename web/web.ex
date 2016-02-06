@@ -36,6 +36,8 @@ defmodule SpeakEasyApi.Web do
 
       import SpeakEasyApi.Router.Helpers
       import SpeakEasyApi.Gettext
+
+      import Canary.Plugs
     end
   end
 
