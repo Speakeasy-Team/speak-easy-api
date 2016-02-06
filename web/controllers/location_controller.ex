@@ -19,6 +19,14 @@ defmodule SpeakEasyApi.LocationController do
     render(conn, "index.json", locations: conn.assigns.locations)
   end
 
+  def show(conn, %{"lat" => lat, "long" => long}) do
+    lat = String.to_float(lat)
+    long = String.to_float(long)
+
+    render(conn, "show.json", %{user_location: %{latitude: lat, longitude:
+        long}, locations: conn.assigns.locations})
+  end
+
   def show(conn, %{"id" => id}) do
     render(conn, "show.json", location: conn.assigns.location)
   end

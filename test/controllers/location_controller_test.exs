@@ -41,6 +41,14 @@ defmodule SpeakEasyApi.LocationControllerTest do
       "cover_image_url" => location.cover_image_url}
   end
 
+  test "shows distance to location from given param coords", %{conn: conn} do
+    location = Repo.insert! %Location{latitude: 1.000000, longitude: 0.000000}
+    conn = get conn, location_path(conn, :index), %{lat: "0.000000", long:
+      "0.000000"}
+    [location|_] = json_response(conn, 200)["data"]
+    assert location["distance"] != %{}
+  end
+
   test "does not show resource and instead throw error when id is nonexistent" do
     conn = get conn, location_path(conn, :show, -1)
     assert conn.status == 404

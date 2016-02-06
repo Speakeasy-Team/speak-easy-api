@@ -17,6 +17,11 @@ defmodule SpeakEasyApi.LocationView do
     %{data: render_many(locations, SpeakEasyApi.LocationView, "location.json")}
   end
 
+  def render("show.json", %{user_location: user_location, location: location}) do
+    %{data: render_one(location, SpeakEasyApi.LocationView, "location.json",
+      %{user_location: user_location, location: location})}
+  end
+
   def render("show.json", %{location: location}) do
     %{data: render_one(location, SpeakEasyApi.LocationView, "location.json")}
   end
