@@ -11,7 +11,8 @@ defmodule SpeakEasyApi.Auth do
     user = Repo.get_by(User, email: email)
 
     if valid_password?(user, password) do
-      json(conn, %{token: SpeakEasyApi.JWTConverter.to_token(%{user_id: user.id})})
+      token = SpeakEasyApi.JWTConverter.to_token(%{user_id: user.id})
+      json(conn, %{token: token})
     else
       conn
       |> put_status(401)

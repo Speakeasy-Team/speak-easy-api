@@ -39,6 +39,7 @@ defmodule SpeakEasyApi.Mixfile do
       {:gettext, "~> 0.9"},
       {:cowboy, "~> 1.0"},
       {:comeonin, "~> 2.1"},
+      {:cors_plug, "~> 1.1"},
       {:json_web_token, "~> 0.2"},
       {:mock, "~> 0.1.1", only: :test},
       {:canary, "~> 0.13.0"},

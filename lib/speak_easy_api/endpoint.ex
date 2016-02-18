@@ -32,5 +32,6 @@ defmodule SpeakEasyApi.Endpoint do
     key: "_speak_easy_api_key",
     signing_salt: "mdoE9LIq"
 
+  plug CORSPlug
   plug SpeakEasyApi.Router
 end
