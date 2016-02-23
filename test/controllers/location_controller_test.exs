@@ -13,7 +13,12 @@ defmodule SpeakEasyApi.LocationControllerTest do
   @invalid_attrs %{}
 
   setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    conn =
+      conn
+      |> put_req_header("accept", "application/vnd.api+json")
+      |> put_req_header("content-type", "application/vnd.api+json")
+
+    {:ok, conn: conn}
   end
 
   test "lists all entries on index", %{conn: conn} do
@@ -23,38 +28,38 @@ defmodule SpeakEasyApi.LocationControllerTest do
 
   test "lists all the distances from a location", %{conn: conn} do
     location = Repo.insert! %Location{latitude: 1.0000, longitude: 0.0000}
-    conn = get conn, location_path(conn, :index), %{lat: "0.0000", long:
-      "0.0000"}
-    [location|_] = json_response(conn, 200)["data"]
-    assert location["distance"] != %{}
+    conn = get conn, location_path(conn, :index), %{lat: "0.0000", long: "0.0000"}
+    [attributes|_] = json_response(conn, 200)["data"]
+    assert attributes["distance"] != %{}
   end
 
   test "shows chosen resource", %{conn: conn} do
     location = Repo.insert! %Location{}
     conn = get conn, location_path(conn, :show, location)
-    assert json_response(conn, 200)["data"] == %{"id" => location.id,
+    assert json_response(conn, 200)["data"]["attributes"] == %{
       "name" => location.name,
       "description" => location.description,
       "latitude" => location.latitude,
       "longitude" => location.longitude,
+      "distance" => nil,
       "tags" => [],
-      "cover_image_url" => location.cover_image_url}
+      "coverImageUrl" => location.cover_image_url}
   end
 
   test "shows distance to location from given param coords", %{conn: conn} do
     location = Repo.insert! %Location{latitude: 1.000000, longitude: 0.000000}
     conn = get conn, location_path(conn, :index), %{lat: "0.000000", long:
       "0.000000"}
-    [location|_] = json_response(conn, 200)["data"]
-    assert location["distance"] != %{}
+    [attributes|_] = json_response(conn, 200)["data"]
+    assert attributes["distance"] != %{}
   end
 
-  test "does not show resource and instead throw error when id is nonexistent" do
+  test "does not show resource and instead throw error when id is nonexistent", %{conn: conn} do
     conn = get conn, location_path(conn, :show, -1)
     assert conn.status == 404
   end
 
-  test "#create returns unauthorized for a guest" do
+  test "#create returns unauthorized for a guest", %{conn: conn} do
     conn = conn |> post(location_path(conn, :create), location: @valid_attrs)
     assert json_response(conn, 401)
   end

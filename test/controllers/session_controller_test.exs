@@ -3,10 +3,15 @@ defmodule SpeakEasyApi.SessionControllerTest do
   alias SpeakEasyApi.User
 
   setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    conn =
+      conn
+      |> put_req_header("accept", "application/vnd.api+json")
+      |> put_req_header("content-type", "application/vnd.api+json")
+
+    {:ok, conn: conn}
   end
 
-  test "#create returns a JWT object on a successful post" do
+  test "#create returns a JWT object on a successful post", %{conn: conn} do
     email = "user@example.com"
     password = "supersecret"
 
@@ -17,7 +22,7 @@ defmodule SpeakEasyApi.SessionControllerTest do
     assert json_response(conn, 200)["token"]
   end
 
-  test "#create returns a 401 on an unsuccessful post" do
+  test "#create returns a 401 on an unsuccessful post", %{conn: conn} do
     email = "user@example.com"
     password = "supersecret"
 

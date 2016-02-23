@@ -7,24 +7,8 @@ defmodule SpeakEasyApi.LocationController do
   plug :load_resource, model: Location, only: [:index, :show, :update, :delete]
   plug :authorize_resource, model: Location, only: [:create, :update, :delete]
 
-  def index(conn, %{"lat" => lat, "long" => long}) do
-    lat = String.to_float(lat)
-    long = String.to_float(long)
-
-    render(conn, "index.json", %{user_location: %{latitude: lat, longitude:
-        long}, locations: conn.assigns.locations})
-  end
-
   def index(conn, _params) do
     render(conn, "index.json", locations: conn.assigns.locations)
-  end
-
-  def show(conn, %{"lat" => lat, "long" => long}) do
-    lat = String.to_float(lat)
-    long = String.to_float(long)
-
-    render(conn, "show.json", %{user_location: %{latitude: lat, longitude:
-        long}, locations: conn.assigns.locations})
   end
 
   def show(conn, %{"id" => id}) do
