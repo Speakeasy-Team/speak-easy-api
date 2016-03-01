@@ -2,7 +2,9 @@ defmodule SpeakEasyApi.Router do
   use SpeakEasyApi.Web, :router
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug :accepts, ["json-api"]
+    plug JaSerializer.ContentTypeNegotiation
+    plug JaSerializer.Deserializer
     plug SpeakEasyApi.Plugs.CurrentUser, repo: SpeakEasyApi.Repo
   end
 

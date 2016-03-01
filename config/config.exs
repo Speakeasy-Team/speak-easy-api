@@ -32,4 +32,8 @@ config :canary,
   not_found_handler: {SpeakEasyApi.CanaryHelper, :handle_not_found},
   unauthorized_handler: {SpeakEasyApi.CanaryHelper, :handle_unauthorized}
 
+config :ja_serializer, key_format: {:custom, SpeakEasyApi.Camelize, :pascalize}
+
+config :plug, :mimes, %{ "application/vnd.api+json" => ["json-api"] }
+
 import_config "#{Mix.env}.exs"
